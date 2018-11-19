@@ -22,7 +22,7 @@ void process_line ( char *buffer)
     char *spg; //начало нового потенциального слова
     char *fpg; //конец нового потенциального слова
 	int found; // признак слова
-	found=NO;
+	found=YES;
 	c=buffer;
 	sp1=0;
 	fp1=0;
