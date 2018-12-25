@@ -180,6 +180,7 @@ void addDoc(struct data **head, int *cnt)//функция добавления врача
 	char days[5][20] = { "Понедельник","Вторник","Среда","Четверг","Пятница" };
 	int i;
 	int callback_int;
+	int flag;//переменная при неправильном вводе
 	struct data *current;
 	//char callback_char[LEN];//Переменная считывания строки
 	if (!*cnt)
@@ -202,7 +203,13 @@ void addDoc(struct data **head, int *cnt)//функция добавления врача
 		printf("[%d]%s\n", i + 1, spec[i]);
 	}
 	printf("Выберите специальность врача (1-6): ");
-	scanf("%d", &callback_int);
+	flag = 0;
+	do {
+		if (flag)
+			printf("Введено неправильное значение. Введите от 1 до 6: ");
+		scanf("%d", &callback_int);
+		flag = 1;
+	} while ((callback_int < 1) || (callback_int > 6));
 	strcpy(current->spec, spec[callback_int - 1]);
 	system("cls");//Очисщение консоли
 	printf("Введите номер кабинета: ");
@@ -213,7 +220,13 @@ void addDoc(struct data **head, int *cnt)//функция добавления врача
 		printf("[%d]%s\n", i + 1, days[i]);
 	}
 	printf("Выберите день работы врача (1-5): ");
-	scanf("%d", &callback_int);
+	flag = 0;
+	do {
+		if (flag)
+			printf("Введено неправильное значение. Введите от 1 до 5: ");
+		scanf("%d", &callback_int);
+		flag = 1;
+	} while ((callback_int < 1) || (callback_int > 5));
 	current->day = callback_int;
 	system("cls");//Очисщение консоли
 	printf("Введите время начала работы: ");
@@ -226,6 +239,7 @@ void edit(struct data *current)//функция редактирования врача
 {
 	int i;
 	int vibor;
+	int flag;
 	char spec[6][20] = { "Хирург","Офтальмолог","Терапевт","Педиатр","ЛОР","Стоматолог" };
 	char days[5][20] = { "Понедельник","Вторник","Среда","Четверг","Пятница" };
 	system("cls");//Очисщение консоли
@@ -240,7 +254,13 @@ void edit(struct data *current)//функция редактирования врача
 		printf("[%d]%s\n", i + 1, spec[i]);
 	}
 	printf("Выберите специальность врача (1-6): ");
-	scanf("%d", &vibor);
+	flag = 0;
+	do {
+		if(flag)
+			printf("Введено неправильное значение. Введите от 1 до 6: ");
+		scanf("%d", &vibor);
+		flag = 1;
+	} while ((vibor < 1) || (vibor > 6));
 	strcpy(current->spec, spec[vibor - 1]);
 	system("cls");//Очисщение консоли
 	printf("Старый номер кабинета: %d\n", current->num);
@@ -253,7 +273,13 @@ void edit(struct data *current)//функция редактирования врача
 		printf("[%d]%s\n", i + 1, days[i]);
 	}
 	printf("Выберите день работы врача (1-5): ");
-	scanf("%d", &vibor);
+	flag = 0;
+	do {
+		if (flag)
+			printf("Введено неправильное значение. Введите от 1 до 5: ");
+		scanf("%d", &vibor);
+		flag = 1;
+} while ((vibor < 1) || (vibor > 5));
 	current->day = vibor;
 	system("cls");//Очисщение консоли
 	printf("Введите время начала работы: ");
@@ -269,6 +295,7 @@ int main(void)//основная функция
 	struct data *head = NULL;
 	struct data *current = NULL;
 	int vibor;
+	int flag = 0;
 	int count = 0, i = 0;
 	char days[5][20] = { "Понедельник","Вторник","Среда","Четверг","Пятница" };
 	char spec[6][20] = { "Хирург","Офтальмолог","Терапевт","Педиатр","ЛОР","Стоматолог" };
@@ -409,7 +436,13 @@ int main(void)//основная функция
 				printf("[%d]%s\n", i + 1, spec[i]);
 			}
 			printf("Выберите специальность врача (1-6): ");
-			scanf("%d", &vibor);
+			flag = 0;
+			do {
+				if(flag)
+					printf("Введено неправильное значение. Введите от 1 до 6: ");
+				scanf("%d", &vibor);
+				flag = 1;
+			}while ((vibor < 1) || (vibor > 6));
 			system("CLS");
 			current = head;
 			i = 1;
