@@ -1,56 +1,56 @@
-/*База данных "Поликлиника"
- Пополнение базы.
- Редактирование базы.
- Удаление записей.
- Вывод содержимого базы по фамилиям в алфавитном порядке. Вывод загрузки
-выбранного кабинета по дням недели.
- Вывод списка врачей по указанной специальности в алфавитном порядке.
-Подбор врача по специальности и времени приёма.
+/*ГЃГ Г§Г  Г¤Г Г­Г­Г»Гµ "ГЏГ®Г«ГЁГЄГ«ГЁГ­ГЁГЄГ "
+ ГЏГ®ГЇГ®Г«Г­ГҐГ­ГЁГҐ ГЎГ Г§Г».
+ ГђГҐГ¤Г ГЄГІГЁГ°Г®ГўГ Г­ГЁГҐ ГЎГ Г§Г».
+ Г“Г¤Г Г«ГҐГ­ГЁГҐ Г§Г ГЇГЁГ±ГҐГ©.
+ Г‚Г»ГўГ®Г¤ Г±Г®Г¤ГҐГ°Г¦ГЁГ¬Г®ГЈГ® ГЎГ Г§Г» ГЇГ® ГґГ Г¬ГЁГ«ГЁГїГ¬ Гў Г Г«ГґГ ГўГЁГІГ­Г®Г¬ ГЇГ®Г°ГїГ¤ГЄГҐ. Г‚Г»ГўГ®Г¤ Г§Г ГЈГ°ГіГ§ГЄГЁ
+ГўГ»ГЎГ°Г Г­Г­Г®ГЈГ® ГЄГ ГЎГЁГ­ГҐГІГ  ГЇГ® Г¤Г­ГїГ¬ Г­ГҐГ¤ГҐГ«ГЁ.
+ Г‚Г»ГўГ®Г¤ Г±ГЇГЁГ±ГЄГ  ГўГ°Г Г·ГҐГ© ГЇГ® ГіГЄГ Г§Г Г­Г­Г®Г© Г±ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГЁ Гў Г Г«ГґГ ГўГЁГІГ­Г®Г¬ ГЇГ®Г°ГїГ¤ГЄГҐ.
+ГЏГ®Г¤ГЎГ®Г° ГўГ°Г Г·Г  ГЇГ® Г±ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГЁ ГЁ ГўГ°ГҐГ¬ГҐГ­ГЁ ГЇГ°ГЁВёГ¬Г .
 */
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
 #define LEN 100
 #define SPC 20
-struct data //Узел ОЛС
+struct data //Г“Г§ГҐГ« ГЋГ‹Г‘
 {
-	char name[LEN];//Пример: Иванов И.И.
-	char spec[SPC];//Специальность
-	int num;//Номер кабинета
-	int day;// День приема
-	int st_vis;//Начало приема
-	int end_vis;//Конец приема
-	struct data *ptr;//указатель на следующий элемент
+	char name[LEN];//ГЏГ°ГЁГ¬ГҐГ°: Г€ГўГ Г­Г®Гў Г€.Г€.
+	char spec[SPC];//Г‘ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј
+	int num;//ГЌГ®Г¬ГҐГ° ГЄГ ГЎГЁГ­ГҐГІГ 
+	int day;// Г„ГҐГ­Гј ГЇГ°ГЁГҐГ¬Г 
+	int st_vis;//ГЌГ Г·Г Г«Г® ГЇГ°ГЁГҐГ¬Г 
+	int end_vis;//ГЉГ®Г­ГҐГ¶ ГЇГ°ГЁГҐГ¬Г 
+	struct data *ptr;//ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГЅГ«ГҐГ¬ГҐГ­ГІ
 };
-//Объявление начала спиcка
-struct data* init()//а - значение первого узла
+//ГЋГЎГєГїГўГ«ГҐГ­ГЁГҐ Г­Г Г·Г Г«Г  Г±ГЇГЁcГЄГ 
+struct data* init()//Г  - Г§Г­Г Г·ГҐГ­ГЁГҐ ГЇГҐГ°ГўГ®ГЈГ® ГіГ§Г«Г 
 {
 	struct data *lst;
 	lst = (struct data*)malloc(sizeof(struct data));
-	lst->ptr = NULL; // последний узел списка
+	lst->ptr = NULL; // ГЇГ®Г±Г«ГҐГ¤Г­ГЁГ© ГіГ§ГҐГ« Г±ГЇГЁГ±ГЄГ 
 	return (lst);
 }
-// Удаление головы
+// Г“Г¤Г Г«ГҐГ­ГЁГҐ ГЈГ®Г«Г®ГўГ»
 struct data * deleteHead(struct data *head)
 {
 	struct data *temp;
 	temp = head->ptr;
-	free(head);//освобождение памяти текущего корня списка
+	free(head);//Г®Г±ГўГ®ГЎГ®Г¦Г¤ГҐГ­ГЁГҐ ГЇГ Г¬ГїГІГЁ ГІГҐГЄГіГ№ГҐГЈГ® ГЄГ®Г°Г­Гї Г±ГЇГЁГ±ГЄГ 
 	return(temp);
 }
-//увольнение врача!!!!
+//ГіГўГ®Г«ГјГ­ГҐГ­ГЁГҐ ГўГ°Г Г·Г !!!!
 void deleteDoc(struct data *lst, struct data *head)
 {
 	struct data *temp;
 	temp = head;
-	while (temp->ptr != lst)//чтение списка с головы
+	while (temp->ptr != lst)//Г·ГІГҐГ­ГЁГҐ Г±ГЇГЁГ±ГЄГ  Г± ГЈГ®Г«Г®ГўГ»
 	{
 		temp = temp->ptr;
 	}
 	temp->ptr = lst->ptr;
 	free(lst);
 }
-void freeStruct(struct data *head)//очистка памяти
+void freeStruct(struct data *head)//Г®Г·ГЁГ±ГІГЄГ  ГЇГ Г¬ГїГІГЁ
 {
 	struct data * current = head;
 	struct data * next = NULL;
@@ -61,19 +61,19 @@ void freeStruct(struct data *head)//очистка памяти
 		current = next;
 	} while (current != NULL);
 }
-//добавление элемента в конец списка
+//Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ  Гў ГЄГ®Г­ГҐГ¶ Г±ГЇГЁГ±ГЄГ 
 struct data* appendlist(struct data **headRef)
 {
 	struct data* current = *headRef;
 	struct data* lst;
 	lst = (struct data*)malloc(sizeof(struct data));
 	lst->ptr = NULL;
-	// если список пуст
+	// ГҐГ±Г«ГЁ Г±ГЇГЁГ±Г®ГЄ ГЇГіГ±ГІ
 	if (current == NULL) {
 		*headRef = lst;
 	}
 	else {
-		// иначе
+		// ГЁГ­Г Г·ГҐ
 		while (current->ptr != NULL) {
 			current = current->ptr;
 		}
@@ -81,7 +81,7 @@ struct data* appendlist(struct data **headRef)
 	}
 	return(lst);
 }
-//форматированный вывод врачей
+//ГґГ®Г°Г¬Г ГІГЁГ°Г®ГўГ Г­Г­Г»Г© ГўГ»ГўГ®Г¤ ГўГ°Г Г·ГҐГ©
 void sort(struct data* headRef, int count)
 {
 	struct data* current;
@@ -125,13 +125,13 @@ void sort(struct data* headRef, int count)
 			break;
 	}
 }
-void input(struct data **headRef, int *cnt)//запись из файла
+void input(struct data **headRef, int *cnt)//Г§Г ГЇГЁГ±Гј ГЁГ§ ГґГ Г©Г«Г 
 {
 	FILE *fin;
 	FILE *finit;
 	char line[100];
 	struct data *current;
-	fin = fopen("test.txt", "r"); // открыть файл для чтения
+	fin = fopen("test.txt", "r"); // Г®ГІГЄГ°Г»ГІГј ГґГ Г©Г« Г¤Г«Гї Г·ГІГҐГ­ГЁГї
 	if (fin == NULL)
 	{
 		finit = fopen("test.txt", "w");
@@ -160,11 +160,11 @@ void input(struct data **headRef, int *cnt)//запись из файла
 	}
 	fclose(fin);
 }
-void save(struct data* head)//сохранение изменений
+void save(struct data* head)//Г±Г®ГµГ°Г Г­ГҐГ­ГЁГҐ ГЁГ§Г¬ГҐГ­ГҐГ­ГЁГ©
 {
 	FILE *fout;
 	struct data* current = head;
-	fout = fopen("test.txt", "w"); // открыть файл для чтения
+	fout = fopen("test.txt", "w"); // Г®ГІГЄГ°Г»ГІГј ГґГ Г©Г« Г¤Г«Гї Г·ГІГҐГ­ГЁГї
 	while (current != NULL)
 	{
 		fprintf(fout, "%s\n", current->name);
@@ -172,20 +172,20 @@ void save(struct data* head)//сохранение изменений
 		fprintf(fout, "%d %d %d %d\n", current->num, current->day, current->st_vis, current->end_vis);
 		current = current->ptr;
 	}
-	fclose(fout); // закрыть входной файл
+	fclose(fout); // Г§Г ГЄГ°Г»ГІГј ГўГµГ®Г¤Г­Г®Г© ГґГ Г©Г«
 }
-void addDoc(struct data **head, int *cnt)//функция добавления врача
+void addDoc(struct data **head, int *cnt)//ГґГіГ­ГЄГ¶ГЁГї Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГї ГўГ°Г Г·Г 
 {
-	char spec[6][20] = { "Хирург","Офтальмолог","Терапевт","Педиатр","ЛОР","Стоматолог" };
-	char days[5][20] = { "Понедельник","Вторник","Среда","Четверг","Пятница" };
+	char spec[6][20] = { "Г•ГЁГ°ГіГ°ГЈ","ГЋГґГІГ Г«ГјГ¬Г®Г«Г®ГЈ","Г’ГҐГ°Г ГЇГҐГўГІ","ГЏГҐГ¤ГЁГ ГІГ°","Г‹ГЋГђ","Г‘ГІГ®Г¬Г ГІГ®Г«Г®ГЈ" };
+	char days[5][20] = { "ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ","Г‚ГІГ®Г°Г­ГЁГЄ","Г‘Г°ГҐГ¤Г ","Г—ГҐГІГўГҐГ°ГЈ","ГЏГїГІГ­ГЁГ¶Г " };
 	char *ptr;
 	int i;
 	int callback_int;
 	char callback_char[10];
-	int flag;//переменная при неправильном вводе
+	int flag;//ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г Гї ГЇГ°ГЁ Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®Г¬ ГўГўГ®Г¤ГҐ
 	
 	struct data *current;
-	//char callback_char[LEN];//Переменная считывания строки
+	//char callback_char[LEN];//ГЏГҐГ°ГҐГ¬ГҐГ­Г­Г Гї Г±Г·ГЁГІГ»ГўГ Г­ГЁГї Г±ГІГ°Г®ГЄГЁ
 	if (!*cnt)
 	{
 		current = *head = init();
@@ -193,20 +193,20 @@ void addDoc(struct data **head, int *cnt)//функция добавления врача
 	}
 	else
 	{
-		current = appendlist(head);//добавление нового врача
+		current = appendlist(head);//Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГҐ Г­Г®ГўГ®ГЈГ® ГўГ°Г Г·Г 
 		(*cnt)++;
 	}
-	system("cls");//Очисщение консоли
-	printf("Введите ФИО врача:\nФИО: ");
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ Г”Г€ГЋ ГўГ°Г Г·Г :\nГ”Г€ГЋ: ");
 	flag = 0;
 	do {
 		if (flag)
-			printf("Введено неправильное имя. Введите имя в формате Фамилия И.О. ");
+			printf("Г‚ГўГҐГ¤ГҐГ­Г® Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ ГЁГ¬Гї. Г‚ГўГҐГ¤ГЁГІГҐ ГЁГ¬Гї Гў ГґГ®Г°Г¬Г ГІГҐ Г”Г Г¬ГЁГ«ГЁГї Г€.ГЋ. ");
 		scanf("\n%[^\n]", &current->name);
 		ptr = &current->name;
 		while (*ptr!= '\0')
 		{
-			if (!(*ptr >= 'а' && *ptr <= 'я' || *ptr == ' ' || *ptr == '.' || *ptr >= 'А' && *ptr <= 'Я'))
+			if (!(*ptr >= 'Г ' && *ptr <= 'Гї' || *ptr == ' ' || *ptr == '.' || *ptr >= 'ГЂ' && *ptr <= 'Гџ'))
 			{
 				flag = 1;
 				break;
@@ -219,84 +219,84 @@ void addDoc(struct data **head, int *cnt)//функция добавления врача
 		}
 	} while (flag);
 	flag = 0;
-	system("cls");//Очисщение консоли
-	printf("Введите специальность врача:\n");
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ Г±ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј ГўГ°Г Г·Г :\n");
 	for (i = 0; i < 6; i++)
 	{
 		printf("[%d]%s\n", i + 1, spec[i]);
 	}
-	printf("Выберите специальность врача (1-6): ");
+	printf("Г‚Г»ГЎГҐГ°ГЁГІГҐ Г±ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј ГўГ°Г Г·Г  (1-6): ");
 	flag = 0;
 	do {
 		if (flag)
-			printf("Введено неправильное значение. Введите от 1 до 6: ");
+			printf("Г‚ГўГҐГ¤ГҐГ­Г® Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ. Г‚ГўГҐГ¤ГЁГІГҐ Г®ГІ 1 Г¤Г® 6: ");
 		scanf("%s", &callback_char);
 		flag = 1;
 		callback_int = atoi(callback_char);
 	} while (callback_int < 1 || callback_int > 6);
 	strcpy(current->spec, spec[callback_int - 1]);
-	system("cls");//Очисщение консоли
-	printf("Введите номер кабинета: ");
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ Г­Г®Г¬ГҐГ° ГЄГ ГЎГЁГ­ГҐГІГ : ");
 	scanf("%d", &current->num);
-	system("cls");//Очисщение консоли
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
 	for (i = 0; i < 5; i++)
 	{
 		printf("[%d]%s\n", i + 1, days[i]);
 	}
-	printf("Выберите день работы врача (1-5): ");
+	printf("Г‚Г»ГЎГҐГ°ГЁГІГҐ Г¤ГҐГ­Гј Г°Г ГЎГ®ГІГ» ГўГ°Г Г·Г  (1-5): ");
 	flag = 0;
 	do {
 		if (flag)
-			printf("Введено неправильное значение. Введите от 1 до 5: ");
+			printf("Г‚ГўГҐГ¤ГҐГ­Г® Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ. Г‚ГўГҐГ¤ГЁГІГҐ Г®ГІ 1 Г¤Г® 5: ");
 		scanf("%s", &callback_char);
 		flag = 1;
 		callback_int = atoi(callback_char);
 	} while (callback_int < 1 || callback_int > 5);
 	current->day = callback_int;
-	system("cls");//Очисщение консоли
-	printf("Введите время начала работы: ");
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ ГўГ°ГҐГ¬Гї Г­Г Г·Г Г«Г  Г°Г ГЎГ®ГІГ»: ");
 	flag = 0;
 	do {
 		if (flag)
-			printf("Введено неправильное значение. Введите от 8 до 24: ");
+			printf("Г‚ГўГҐГ¤ГҐГ­Г® Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ. Г‚ГўГҐГ¤ГЁГІГҐ Г®ГІ 8 Г¤Г® 24: ");
 		scanf("%s", &callback_char);
 		flag = 1;
 		callback_int = atoi(callback_char);
 		current->st_vis = callback_int;
 	} while (callback_int < 8 || callback_int > 24);
-		system("cls");//Очисщение консоли
-	printf("Введите время конца работы: ");
+		system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ ГўГ°ГҐГ¬Гї ГЄГ®Г­Г¶Г  Г°Г ГЎГ®ГІГ»: ");
 	flag = 0;
 	do {
 		if (flag)
-			printf("Введено неправильное значение. Введите от 16 до 24: ");
+			printf("Г‚ГўГҐГ¤ГҐГ­Г® Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ. Г‚ГўГҐГ¤ГЁГІГҐ Г®ГІ 16 Г¤Г® 24: ");
 		scanf("%s", &callback_char);
 		flag = 1;
 		callback_int = atoi(callback_char);
 		current->end_vis = callback_int;
 	} while (callback_int < 16 || callback_int > 24);
 }
-void edit(struct data *current)//функция редактирования врача
+void edit(struct data *current)//ГґГіГ­ГЄГ¶ГЁГї Г°ГҐГ¤Г ГЄГІГЁГ°Г®ГўГ Г­ГЁГї ГўГ°Г Г·Г 
 {
 	int i;
 	char vibor[2];
 	int ivibor=0;
 	int flag;
 	char *ptr;
-	char spec[6][20] = { "Хирург","Офтальмолог","Терапевт","Педиатр","ЛОР","Стоматолог" };
-	char days[5][20] = { "Понедельник","Вторник","Среда","Четверг","Пятница" };
-	system("cls");//Очисщение консоли
-	printf("Старое ФИО врача: %s \n", current->name);
-	printf("Введите новое ФИО врача:\nФИО: ");
+	char spec[6][20] = { "Г•ГЁГ°ГіГ°ГЈ","ГЋГґГІГ Г«ГјГ¬Г®Г«Г®ГЈ","Г’ГҐГ°Г ГЇГҐГўГІ","ГЏГҐГ¤ГЁГ ГІГ°","Г‹ГЋГђ","Г‘ГІГ®Г¬Г ГІГ®Г«Г®ГЈ" };
+	char days[5][20] = { "ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ","Г‚ГІГ®Г°Г­ГЁГЄ","Г‘Г°ГҐГ¤Г ","Г—ГҐГІГўГҐГ°ГЈ","ГЏГїГІГ­ГЁГ¶Г " };
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‘ГІГ Г°Г®ГҐ Г”Г€ГЋ ГўГ°Г Г·Г : %s \n", current->name);
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ Г­Г®ГўГ®ГҐ Г”Г€ГЋ ГўГ°Г Г·Г :\nГ”Г€ГЋ: ");
 	flag = 0;
 	do {
 		if (flag)
-			printf("Введено неправильное имя. Введите имя в формате Фамилия И.О. : ");
+			printf("Г‚ГўГҐГ¤ГҐГ­Г® Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ ГЁГ¬Гї. Г‚ГўГҐГ¤ГЁГІГҐ ГЁГ¬Гї Гў ГґГ®Г°Г¬Г ГІГҐ Г”Г Г¬ГЁГ«ГЁГї Г€.ГЋ. : ");
 		scanf("\n%[^\n]", &current->name);
 		ptr = &current->name;
 		while (*ptr != '\0')
 		{
-			if (!(*ptr >= 'а' && *ptr <= 'я' || *ptr == ' ' || *ptr == '.' || *ptr >= 'А' && *ptr <= 'Я'))
+			if (!(*ptr >= 'Г ' && *ptr <= 'Гї' || *ptr == ' ' || *ptr == '.' || *ptr >= 'ГЂ' && *ptr <= 'Гџ'))
 			{
 				flag = 1;
 				break;
@@ -309,18 +309,18 @@ void edit(struct data *current)//функция редактирования врача
 		}
 	} while (flag);
 	flag = 0;
-	system("cls");//Очисщение консоли
-	printf("Старая специальность врача: %s \n", current->spec);
-	printf("Введите новую специальность врача:\n");
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‘ГІГ Г°Г Гї Г±ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј ГўГ°Г Г·Г : %s \n", current->spec);
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ Г­Г®ГўГіГѕ Г±ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј ГўГ°Г Г·Г :\n");
 	for (i = 0; i < 6; i++)
 	{
 		printf("[%d]%s\n", i + 1, spec[i]);
 	}
-	printf("Выберите специальность врача (1-6): ");
+	printf("Г‚Г»ГЎГҐГ°ГЁГІГҐ Г±ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј ГўГ°Г Г·Г  (1-6): ");
 	flag = 0;
 	do {
 		if(flag)
-			printf("Введено неправильное значение. Введите от 1 до 6: ");
+			printf("Г‚ГўГҐГ¤ГҐГ­Г® Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ. Г‚ГўГҐГ¤ГЁГІГҐ Г®ГІ 1 Г¤Г® 6: ");
 		scanf("%s", &vibor);
 		ivibor = atoi(vibor);
 		flag = 1;
@@ -328,33 +328,33 @@ void edit(struct data *current)//функция редактирования врача
 	strcpy(cu
 		rrent->spec, spec[ivibor - 1]);
 	flag = 0;
-	system("cls");//Очисщение консоли
-	printf("Старый номер кабинета: %d\n", current->num);
-	printf("Введите новый номер кабинета: ");
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‘ГІГ Г°Г»Г© Г­Г®Г¬ГҐГ° ГЄГ ГЎГЁГ­ГҐГІГ : %d\n", current->num);
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ Г­Г®ГўГ»Г© Г­Г®Г¬ГҐГ° ГЄГ ГЎГЁГ­ГҐГІГ : ");
 	scanf("%d", &current->num);
-	system("cls");//Очисщение консоли
-	printf("Бывший день работы врача: %s \n", days[current->day - 1]);
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("ГЃГ»ГўГёГЁГ© Г¤ГҐГ­Гј Г°Г ГЎГ®ГІГ» ГўГ°Г Г·Г : %s \n", days[current->day - 1]);
 	for (i = 0; i < 5; i++)
 	{
 		printf("[%d]%s\n", i + 1, days[i]);
 	}
-	printf("Выберите день работы врача (1-5): ");
+	printf("Г‚Г»ГЎГҐГ°ГЁГІГҐ Г¤ГҐГ­Гј Г°Г ГЎГ®ГІГ» ГўГ°Г Г·Г  (1-5): ");
 	flag = 0;
 	do {
 		if (flag)
-			printf("Введено неправильное значение. Введите от 1 до 5: ");
+			printf("Г‚ГўГҐГ¤ГҐГ­Г® Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ. Г‚ГўГҐГ¤ГЁГІГҐ Г®ГІ 1 Г¤Г® 5: ");
 		scanf("%d", &vibor);
 		flag = 1;
 } while ((vibor < 1) || (vibor > 5));
 	current->day = vibor;
-	system("cls");//Очисщение консоли
-	printf("Введите время начала работы: ");
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ ГўГ°ГҐГ¬Гї Г­Г Г·Г Г«Г  Г°Г ГЎГ®ГІГ»: ");
 	scanf("%d", &current->st_vis);
-	system("cls");//Очисщение консоли
-	printf("Введите время конца работы: ");
+	system("cls");//ГЋГ·ГЁГ±Г№ГҐГ­ГЁГҐ ГЄГ®Г­Г±Г®Г«ГЁ
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ ГўГ°ГҐГ¬Гї ГЄГ®Г­Г¶Г  Г°Г ГЎГ®ГІГ»: ");
 	scanf("%d", &current->end_vis);
 }
-int main(void)//основная функция
+int main(void)//Г®Г±Г­Г®ГўГ­Г Гї ГґГіГ­ГЄГ¶ГЁГї
 {
 	system("chcp 1251");
 	system("cls");
@@ -363,14 +363,14 @@ int main(void)//основная функция
 	int vibor;
 	int flag = 0;
 	int count = 0, i = 0;
-	char days[5][20] = { "Понедельник","Вторник","Среда","Четверг","Пятница" };
-	char spec[6][20] = { "Хирург","Офтальмолог","Терапевт","Педиатр","ЛОР","Стоматолог" };
+	char days[5][20] = { "ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ","Г‚ГІГ®Г°Г­ГЁГЄ","Г‘Г°ГҐГ¤Г ","Г—ГҐГІГўГҐГ°ГЈ","ГЏГїГІГ­ГЁГ¶Г " };
+	char spec[6][20] = { "Г•ГЁГ°ГіГ°ГЈ","ГЋГґГІГ Г«ГјГ¬Г®Г«Г®ГЈ","Г’ГҐГ°Г ГЇГҐГўГІ","ГЏГҐГ¤ГЁГ ГІГ°","Г‹ГЋГђ","Г‘ГІГ®Г¬Г ГІГ®Г«Г®ГЈ" };
 	char main;
 	input(&head, &count);
 	do
 	{
 		system("cls");
-		printf("[0] Выйти из программы\n[1] Добавить нового врача\n[2] Редактировать расписания\n[3] Уволить врача\n[4] Вывести врачей в алфавитном порядке\n[5] Работа кабинета по дням недели\n[6] Подбор врача\nВыберите пункт из списка : ");
+		printf("[0] Г‚Г»Г©ГІГЁ ГЁГ§ ГЇГ°Г®ГЈГ°Г Г¬Г¬Г»\n[1] Г„Г®ГЎГ ГўГЁГІГј Г­Г®ГўГ®ГЈГ® ГўГ°Г Г·Г \n[2] ГђГҐГ¤Г ГЄГІГЁГ°Г®ГўГ ГІГј Г°Г Г±ГЇГЁГ±Г Г­ГЁГї\n[3] Г“ГўГ®Г«ГЁГІГј ГўГ°Г Г·Г \n[4] Г‚Г»ГўГҐГ±ГІГЁ ГўГ°Г Г·ГҐГ© Гў Г Г«ГґГ ГўГЁГІГ­Г®Г¬ ГЇГ®Г°ГїГ¤ГЄГҐ\n[5] ГђГ ГЎГ®ГІГ  ГЄГ ГЎГЁГ­ГҐГІГ  ГЇГ® Г¤Г­ГїГ¬ Г­ГҐГ¤ГҐГ«ГЁ\n[6] ГЏГ®Г¤ГЎГ®Г° ГўГ°Г Г·Г \nГ‚Г»ГЎГҐГ°ГЁГІГҐ ГЇГіГ­ГЄГІ ГЁГ§ Г±ГЇГЁГ±ГЄГ  : ");
 		scanf("%c", &main);
 		switch (main)
 		{
@@ -381,7 +381,7 @@ int main(void)//основная функция
 			system("cls");
 			if (!count)
 			{
-				printf("Нет врачей\n");
+				printf("ГЌГҐГІ ГўГ°Г Г·ГҐГ©\n");
 				system("pause");
 				break;
 			}
@@ -393,7 +393,7 @@ int main(void)//основная функция
 				i++;
 				current = current->ptr;
 			}
-			printf("Выберите врача для изменения: ");
+			printf("Г‚Г»ГЎГҐГ°ГЁГІГҐ ГўГ°Г Г·Г  Г¤Г«Гї ГЁГ§Г¬ГҐГ­ГҐГ­ГЁГї: ");
 			scanf("%d", &vibor);
 			current = head;
 			for (i = 0; i < vibor - 1; i++)
@@ -406,7 +406,7 @@ int main(void)//основная функция
 			system("cls");
 			if (!count)
 			{
-				printf("Нет врачей\n");
+				printf("ГЌГҐГІ ГўГ°Г Г·ГҐГ©\n");
 				system("pause");
 				break;
 			}
@@ -418,7 +418,7 @@ int main(void)//основная функция
 				i++;
 				current = current->ptr;
 			}
-			printf("Выберите врача для увольнения: ");
+			printf("Г‚Г»ГЎГҐГ°ГЁГІГҐ ГўГ°Г Г·Г  Г¤Г«Гї ГіГўГ®Г«ГјГ­ГҐГ­ГЁГї: ");
 			scanf("%d", &vibor);
 			current = head;
 			for (i = 0; i < vibor - 1; i++)
@@ -439,7 +439,7 @@ int main(void)//основная функция
 		case '4':
 			if (!count)
 			{
-				printf("Нет врачей\n");
+				printf("ГЌГҐГІ ГўГ°Г Г·ГҐГ©\n");
 				system("pause");
 				break;
 			}
@@ -449,11 +449,11 @@ int main(void)//основная функция
 			while (current != NULL)
 			{
 				printf("------[%d]------\n", i);
-				printf("Специальность: %s\n", current->spec);
-				printf("Имя: %s\n", current->name);
-				printf("Кабинет: %d\n", current->num);
-				printf("День: %s\n", days[(current->day) - 1]);
-				printf("Начало/Конец приема: с %d до %d\n", current->st_vis, current->end_vis);
+				printf("Г‘ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј: %s\n", current->spec);
+				printf("Г€Г¬Гї: %s\n", current->name);
+				printf("ГЉГ ГЎГЁГ­ГҐГІ: %d\n", current->num);
+				printf("Г„ГҐГ­Гј: %s\n", days[(current->day) - 1]);
+				printf("ГЌГ Г·Г Г«Г®/ГЉГ®Г­ГҐГ¶ ГЇГ°ГЁГҐГ¬Г : Г± %d Г¤Г® %d\n", current->st_vis, current->end_vis);
 				i++;
 				current = current->ptr;
 			}
@@ -463,15 +463,15 @@ int main(void)//основная функция
 			system("CLS");
 			if (!count)
 			{
-				printf("Нет врачей\n");
+				printf("ГЌГҐГІ ГўГ°Г Г·ГҐГ©\n");
 				system("pause");
 				break;
 			}
-			printf("Введите номер кабинета: ");
+			printf("Г‚ГўГҐГ¤ГЁГІГҐ Г­Г®Г¬ГҐГ° ГЄГ ГЎГЁГ­ГҐГІГ : ");
 			scanf("%d", &vibor);
 			system("CLS");
 			printf("=========================\n");
-			printf("Кабинет № %d\n", vibor);
+			printf("ГЉГ ГЎГЁГ­ГҐГІ В№ %d\n", vibor);
 			printf("=========================\n");
 			for (i = 0; i < 5; i++)
 			{
@@ -493,7 +493,7 @@ int main(void)//основная функция
 			system("CLS");
 			if (!count)
 			{
-				printf("Нет врачей\n");
+				printf("ГЌГҐГІ ГўГ°Г Г·ГҐГ©\n");
 				system("pause");
 				break;
 			}
@@ -501,11 +501,11 @@ int main(void)//основная функция
 			{
 				printf("[%d]%s\n", i + 1, spec[i]);
 			}
-			printf("Выберите специальность врача (1-6): ");
+			printf("Г‚Г»ГЎГҐГ°ГЁГІГҐ Г±ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј ГўГ°Г Г·Г  (1-6): ");
 			flag = 0;
 			do {
 				if(flag)
-					printf("Введено неправильное значение. Введите от 1 до 6: ");
+					printf("Г‚ГўГҐГ¤ГҐГ­Г® Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ. Г‚ГўГҐГ¤ГЁГІГҐ Г®ГІ 1 Г¤Г® 6: ");
 				scanf("%d", &vibor);
 				flag = 1;
 			}while ((vibor < 1) || (vibor > 6));
@@ -517,11 +517,11 @@ int main(void)//основная функция
 				if (!strcmp(current->spec, spec[vibor - 1]))
 				{
 					printf("------[%d]------\n", i);
-					printf("Специальность: %s\n", current->spec);
-					printf("Имя: %s\n", current->name);
-					printf("Кабинет: %d\n", current->num);
-					printf("День: %s\n", days[(current->day) - 1]);
-					printf("Начало/Конец приема: с %d до %d\n", current->st_vis, current->end_vis);
+					printf("Г‘ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј: %s\n", current->spec);
+					printf("Г€Г¬Гї: %s\n", current->name);
+					printf("ГЉГ ГЎГЁГ­ГҐГІ: %d\n", current->num);
+					printf("Г„ГҐГ­Гј: %s\n", days[(current->day) - 1]);
+					printf("ГЌГ Г·Г Г«Г®/ГЉГ®Г­ГҐГ¶ ГЇГ°ГЁГҐГ¬Г : Г± %d Г¤Г® %d\n", current->st_vis, current->end_vis);
 					i++;
 				}
 				current = current->ptr;
