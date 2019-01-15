@@ -178,9 +178,12 @@ void addDoc(struct data **head, int *cnt)//функция добавления врача
 {
 	char spec[6][20] = { "Хирург","Офтальмолог","Терапевт","Педиатр","ЛОР","Стоматолог" };
 	char days[5][20] = { "Понедельник","Вторник","Среда","Четверг","Пятница" };
+	char *ptr;
 	int i;
 	int callback_int;
+	char callback_char[10];
 	int flag;//переменная при неправильном вводе
+	
 	struct data *current;
 	//char callback_char[LEN];//Переменная считывания строки
 	if (!*cnt)
@@ -195,7 +198,27 @@ void addDoc(struct data **head, int *cnt)//функция добавления врача
 	}
 	system("cls");//Очисщение консоли
 	printf("Введите ФИО врача:\nФИО: ");
-	scanf("\n%[^\n]", &current->name);
+	flag = 0;
+	do {
+		if (flag)
+			printf("Введено неправильное имя. Введите имя в формате Фамилия И.О. ");
+		scanf("\n%[^\n]", &current->name);
+		ptr = &current->name;
+		while (*ptr!= '\0')
+		{
+			if (!(*ptr >= 'а' && *ptr <= 'я' || *ptr == ' ' || *ptr == '.' || *ptr >= 'А' && *ptr <= 'Я'))
+			{
+				flag = 1;
+				break;
+			}
+			else
+			{
+				flag = 0;
+			}
+			ptr++;
+		}
+	} while (flag);
+	flag = 0;
 	system("cls");//Очисщение консоли
 	printf("Введите специальность врача:\n");
 	for (i = 0; i < 6; i++)
@@ -207,9 +230,10 @@ void addDoc(struct data **head, int *cnt)//функция добавления врача
 	do {
 		if (flag)
 			printf("Введено неправильное значение. Введите от 1 до 6: ");
-		scanf("%d", &callback_int);
+		scanf("%s", &callback_char);
 		flag = 1;
-	} while ((callback_int < 1) || (callback_int > 6));
+		callback_int = atoi(callback_char);
+	} while (callback_int < 1 || callback_int > 6);
 	strcpy(current->spec, spec[callback_int - 1]);
 	system("cls");//Очисщение консоли
 	printf("Введите номер кабинета: ");
@@ -224,28 +248,67 @@ void addDoc(struct data **head, int *cnt)//функция добавления врача
 	do {
 		if (flag)
 			printf("Введено неправильное значение. Введите от 1 до 5: ");
-		scanf("%d", &callback_int);
+		scanf("%s", &callback_char);
 		flag = 1;
-	} while ((callback_int < 1) || (callback_int > 5));
+		callback_int = atoi(callback_char);
+	} while (callback_int < 1 || callback_int > 5);
 	current->day = callback_int;
 	system("cls");//Очисщение консоли
 	printf("Введите время начала работы: ");
-	scanf("%d", &current->st_vis);
-	system("cls");//Очисщение консоли
+	flag = 0;
+	do {
+		if (flag)
+			printf("Введено неправильное значение. Введите от 8 до 24: ");
+		scanf("%s", &callback_char);
+		flag = 1;
+		callback_int = atoi(callback_char);
+		current->st_vis = callback_int;
+	} while (callback_int < 8 || callback_int > 24);
+		system("cls");//Очисщение консоли
 	printf("Введите время конца работы: ");
-	scanf("%d", &current->end_vis);
+	flag = 0;
+	do {
+		if (flag)
+			printf("Введено неправильное значение. Введите от 16 до 24: ");
+		scanf("%s", &callback_char);
+		flag = 1;
+		callback_int = atoi(callback_char);
+		current->end_vis = callback_int;
+	} while (callback_int < 16 || callback_int > 24);
 }
 void edit(struct data *current)//функция редактирования врача
 {
 	int i;
-	int vibor;
+	char vibor[2];
+	int ivibor=0;
 	int flag;
+	char *ptr;
 	char spec[6][20] = { "Хирург","Офтальмолог","Терапевт","Педиатр","ЛОР","Стоматолог" };
 	char days[5][20] = { "Понедельник","Вторник","Среда","Четверг","Пятница" };
 	system("cls");//Очисщение консоли
 	printf("Старое ФИО врача: %s \n", current->name);
 	printf("Введите новое ФИО врача:\nФИО: ");
-	scanf("\n%[^\n]", &current->name);
+	flag = 0;
+	do {
+		if (flag)
+			printf("Введено неправильное имя. Введите имя в формате Фамилия И.О. : ");
+		scanf("\n%[^\n]", &current->name);
+		ptr = &current->name;
+		while (*ptr != '\0')
+		{
+			if (!(*ptr >= 'а' && *ptr <= 'я' || *ptr == ' ' || *ptr == '.' || *ptr >= 'А' && *ptr <= 'Я'))
+			{
+				flag = 1;
+				break;
+			}
+			else
+			{
+				flag = 0;
+			}
+			ptr++;
+		}
+	} while (flag);
+	flag = 0;
 	system("cls");//Очисщение консоли
 	printf("Старая специальность врача: %s \n", current->spec);
 	printf("Введите новую специальность врача:\n");
@@ -258,10 +321,13 @@ void edit(struct data *current)//функция редактирования врача
 	do {
 		if(flag)
 			printf("Введено неправильное значение. Введите от 1 до 6: ");
-		scanf("%d", &vibor);
+		scanf("%s", &vibor);
+		ivibor = atoi(vibor);
 		flag = 1;
-	} while ((vibor < 1) || (vibor > 6));
-	strcpy(current->spec, spec[vibor - 1]);
+	} while ((ivibor < 1) || (ivibor > 6));
+	strcpy(cu
+		rrent->spec, spec[ivibor - 1]);
+	flag = 0;
 	system("cls");//Очисщение консоли
 	printf("Старый номер кабинета: %d\n", current->num);
 	printf("Введите новый номер кабинета: ");
